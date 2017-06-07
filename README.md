@@ -18,7 +18,7 @@ Property FirstName As %String;
 
 Property LastName As %String;
 
-Property DateOfBirth As %Date(SONNAME="BirthDate");
+Property DateOfBirth As %Date(JSONNAME="BirthDate");
 
 Property Secret As %String(JSONIGNORE=1);
 
