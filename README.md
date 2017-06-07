@@ -84,8 +84,8 @@ Core unit tests are included in the test folder. These tests are developed using
 
 ### Release Notes
 
-1.0.0 First Release
-1.0.1 Improve detection of recursive object references
+* 1.0.0 First Release
+* 1.0.1 Improve detection of recursive object references
 
 ### License
 
