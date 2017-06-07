@@ -118,7 +118,7 @@ If you need to design a solution around existing JSON that has an array of array
 
 *This class is currently not available in this release.
 
-### Storeing Raw JSON
+### Storing Raw JSON
 
 A property can contain raw JSON by using the special type Cogs.Lib.Types.Json
 
