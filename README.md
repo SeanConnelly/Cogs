@@ -82,6 +82,11 @@ Documentation can be found in the docs folder and is currently best viewed on th
 
 Core unit tests are included in the test folder. These tests are developed using the Touchstone unit test solution. Unfortunately you will not be able to run these tests until Touchstone has been released (in the near future).
 
+### Release Notes
+
+1.0.0 First Release
+1.0.1 Improve detection of recursive object references
+
 ### License
 
 The core Cogs library is released under the MPL 2.0 license. See the included license agreement for more details.

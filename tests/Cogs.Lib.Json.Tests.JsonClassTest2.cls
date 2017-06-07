@@ -7,7 +7,7 @@ Parameter TestSuiteName = "Cogs.Lib.JSON";
 
 Method OnBeforeAllTests() As %Status
 {
-	//do ##class(Cogs.Lib.Json.Tests.StoredTestClass).%DeleteExtent()
+	do ##class(Cogs.Lib.Json.Tests.StoredTestClass).%DeleteExtent()
 	Quit $$$OK
 }
 

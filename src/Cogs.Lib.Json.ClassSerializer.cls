@@ -3,9 +3,11 @@
 Class Cogs.Lib.Json.ClassSerializer Extends Cogs.Lib.Json.Base
 {
 
-Method toJSON(parent) As %String [ CodeMode = objectgenerator ]
+Method toJSON(parent = "", ByRef seen = "") As %String [ CodeMode = objectgenerator ]
 {
 	set x=%code
+	d x.WriteLine(" if $g(seen($THIS))=1 quit ""{}""")
+	d x.WriteLine(" set seen($THIS)=1")
 	d x.WriteLine(" if $g(parent)'="""" set j=""{""""""_parent_"""""":""")
 	d x.WriteLine(" set j=$g(j)_""{""")
 	set co="",cc=0
@@ -35,7 +37,7 @@ Method toJSON(parent) As %String [ CodeMode = objectgenerator ]
 			d x.WriteLine(" set j=j_"""_co_""""""_name_""""":{"",c2="""",key=.."_p.Name_".Next("""")")
 			d x.WriteLine(" while key'="""" {")
 			d x.WriteLine("  set o=.."_p.Name_".GetAt(key)")
-			d x.WriteLine("   set j=j_c2_""""""""_key_""""""""_"":""_o.toJSON(),c2="",""")
+			d x.WriteLine("   set j=j_c2_""""""""_key_""""""""_"":""_o.toJSON(,.seen),c2="",""")
 			d x.WriteLine("  set key=.."_p.Name_".Next(key),c2="",""")
 			d x.WriteLine(" }")
 			d x.WriteLine(" set j=j_""}""")
@@ -54,7 +56,7 @@ Method toJSON(parent) As %String [ CodeMode = objectgenerator ]
 			d x.WriteLine(" set j=j_"""_co_""""""_name_""""":["",c2=""""")
 			d x.WriteLine(" for i=1:1:.."_p.Name_".Count() {")
 			d x.WriteLine("  set obj=.."_p.Name_".GetAt(i)")
-			d x.WriteLine("  set j=j_c2_obj.toJSON(),c2="",""")
+			d x.WriteLine("  set j=j_c2_obj.toJSON(,.seen),c2="",""")
 			d x.WriteLine(" }")
 			d x.WriteLine(" set j=j_""]""")
 			continue					
@@ -64,6 +66,7 @@ Method toJSON(parent) As %String [ CodeMode = objectgenerator ]
 	}
 	d x.WriteLine(" set j=j_""}""")
 	d x.WriteLine(" if $g(parent)'="""" set j=j_""}""")
+	d x.WriteLine(" kill seen($THIS)")
 	d x.WriteLine(" quit j")
 	quit 1
 }
@@ -78,7 +81,7 @@ ClassMethod getTypeWriter(type) [ Internal ]
 	if "%Library.Boolean"=type q "$s(value=1:""true"",value=0:""false"",1:""null"")"
 	if "%Library.Float %Library.Integer %Library.Numeric %Library.Currency"[type q "$s($e(value,1,2)=""0."":value,$e(value,1)=""."":""0""_value,""0""=$e(value,1):""""""""_value_"""""""",value'="""":+value,1:""null"")"
 	if "%"=$e(type) q quotes_"_..EscapeJSON(value)_"_quotes
-	quit "$s($IsObject(value):value.toJSON(),value="""":$C(34,34),1:"_quotes_"_..EscapeJSON(value)_"_quotes_")"
+	quit "$s($IsObject(value):value.toJSON(,.seen),value="""":$C(34,34),1:"_quotes_"_..EscapeJSON(value)_"_quotes_")"
 }
 
 }
