@@ -60,9 +60,9 @@ The JsonClass will automatically convert these types to and from internal types 
 
 In addition, JsonClass also converts properties that are of type Time, Date and TimeStamp. These dates and times must be in W3C format.
 
-YYYY-MM-DDThh:mm:ss
-YYYY-MM-DD
-hh:mm:ss
+* YYYY-MM-DDThh:mm:ss
+* YYYY-MM-DD
+* hh:mm:ss
 
 https://www.w3.org/TR/NOTE-datetime
 

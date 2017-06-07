@@ -64,7 +64,7 @@ and its as easy as that...
 
 ### Motivation
 
-To provide a one step serialiser and deserialiser of registered and persistent classes that work across all mainstream versions of Caché and Ensemble.
+To provide a one step serialiser and deserialiser of registered and persistent classes that works across all mainstream versions of Caché and Ensemble.
 
 ### Installation
 
