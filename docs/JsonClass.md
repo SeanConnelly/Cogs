@@ -153,7 +153,7 @@ Property Secret As %String(JSONIGNORE = 1);
 Any property value can be overridden using the JSONMETHOD attribute.
 
 ```COS
-Property ZTestJsonMethod As %String(JSONMETHOD = "..ToUpper(..TestLongString));
+Property ZTestJsonMethod As %String(JSONMETHOD = "..ToUpper(..TestLongString)");
 ```
 
 The value of JSONMETHOD should be valid COS code that can be a call to a method or function passing in one or more of the objects property values.
