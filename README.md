@@ -86,6 +86,7 @@ Core unit tests are included in the test folder. These tests are developed using
 
 * 1.0.0 First Release
 * 1.0.1 Improve detection of recursive object references
+* 1.0.2 Improve JSON escape performance on newer instances of Caché, now 7 times faster + Fixed CR & LF escaping (were wrong way round).
 
 ### License
 

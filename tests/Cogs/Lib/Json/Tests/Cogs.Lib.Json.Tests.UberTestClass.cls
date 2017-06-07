@@ -81,11 +81,11 @@ Property TestArrayOfInteger As array Of %Integer;
 
 Property TestEmptyArrayOfInteger As array Of %Integer;
 
-Property TestSingleObject As Cogs.Tests.Json.JsonClassTest;
+Property TestSingleObject As Cogs.Lib.Json.Tests.UberTestClass;
 
-Property TestListOfObject As list Of Cogs.Tests.Json.JsonClassTest;
+Property TestListOfObject As list Of Cogs.Lib.Json.Tests.UberTestClass;
 
-Property TestArrayOfObject As array Of Cogs.Tests.Json.JsonClassTest;
+Property TestArrayOfObject As array Of Cogs.Lib.Json.Tests.UberTestClass;
 
 Property TestIgnoreFlag As %String(JSONIGNORE = 1);
 

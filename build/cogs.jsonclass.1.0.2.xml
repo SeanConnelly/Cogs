@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2014.1.1 (Build 702U)" ts="2017-06-07 14:40:55">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2014.1.1 (Build 702U)" ts="2017-06-07 16:18:28">
 <Class name="Cogs.JsonClass">
 <Description>
 </Description>
@@ -15,24 +15,35 @@
 Copyright (c) 2017 MemCog Ltd
 Set GitHub documentation for help</Description>
 <Super>%RegisteredObject</Super>
-<TimeChanged>64441,34909.741131</TimeChanged>
+<TimeChanged>64441,58621.49736</TimeChanged>
 <TimeCreated>63949,40322.004384</TimeCreated>
 
 <Method name="EscapeJSON">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>string:%String,escapeSolidus:%Boolean=1</FormalSpec>
+<CodeMode>objectgenerator</CodeMode>
+<FormalSpec>string:%String,escapeSolidus:%Boolean=0</FormalSpec>
 <ReturnType>%String</ReturnType>
 <Implementation><![CDATA[
-	set string=$replace(string,$C(0),"")
-	set string=$replace(string,"\","\\")
-	if escapeSolidus=1 Set string=$replace(string,"/","\/")
-	set string=$replace(string,"""","\""")
-	set string=$replace(string,$C(8),"\b")
-	set string=$replace(string,$C(9),"\t")
-	set string=$replace(string,$C(10),"\r")
-	set string=$replace(string,$C(12),"\f")
-	set string=$replace(string,$C(13),"\n")
-	quit string
+	set x=%code
+	set hasJSON=0
+	try {
+		set hasJSON=($system.Version.GetMajor()>2015)||($system.Version.GetMajor()=2015&&$system.Version.GetMinor()=2)	
+	} catch err {
+	}
+	if hasJSON {
+		d x.WriteLine(" quit $zcvt(string,""O"",""JSON"")")
+	} else {
+		d x.WriteLine(" set string=$replace(string,$C(0),"""")")
+		d x.WriteLine(" set string=$replace(string,""\"",""\\"")")
+		d x.WriteLine(" if escapeSolidus=1 Set string=$replace(string,""/"",""\/"")")
+		d x.WriteLine(" set string=$replace(string,"""""""",""\"""""")")
+		d x.WriteLine(" set string=$replace(string,$C(8),""\b"")")
+		d x.WriteLine(" set string=$replace(string,$C(9),""\t"")")
+		d x.WriteLine(" set string=$replace(string,$C(10),""\n"")")
+		d x.WriteLine(" set string=$replace(string,$C(12),""\f"")")
+		d x.WriteLine(" set string=$replace(string,$C(13),""\r"")")
+		d x.WriteLine(" quit string")		
+	}
 ]]></Implementation>
 </Method>
 </Class>
@@ -43,7 +54,7 @@ Set GitHub documentation for help</Description>
 Copyright (c) 2017 MemCog Ltd
 Set GitHub documentation for help</Description>
 <Super>%RegisteredObject</Super>
-<TimeChanged>64441,34919.716842</TimeChanged>
+<TimeChanged>64441,58686.110469</TimeChanged>
 <TimeCreated>63949,44964.56539</TimeCreated>
 
 <Method name="parseJSON">
@@ -64,7 +75,7 @@ Set GitHub documentation for help</Description>
 	for p=p:1:l {
 		set pre=c,c=$e(json,p)
 		if ('string),(c'?1ANP) continue
-		if "\"=pre set str=$e(str,1,$l(str)-1)_$s("""/\"[c:c,c="b":$c(8),c="t":$c(9),c="r":$c(10),c="f":$c(12),1:$c(13)),(pre,c)="" continue
+		if "\"=pre set str=$e(str,1,$l(str)-1)_$s("""/\"[c:c,c="b":$c(8),c="t":$c(9),c="r":$c(13),c="f":$c(12),1:$c(10)),(pre,c)="" continue
 		if """"=c,"\"'=pre set string=$s(string:0,1:1) continue
 		if string set str=str_c continue
 		if ":"=c set name=$method(ob,"bakedJsonName",str),str="" continue

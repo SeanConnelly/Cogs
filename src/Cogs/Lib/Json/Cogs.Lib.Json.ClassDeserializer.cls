@@ -14,7 +14,7 @@ ClassMethod parseObject(ByRef json As %String, ByRef p As %Integer = 1, ByRef l 
 	for p=p:1:l {
 		set pre=c,c=$e(json,p)
 		if ('string),(c'?1ANP) continue
-		if "\"=pre set str=$e(str,1,$l(str)-1)_$s("""/\"[c:c,c="b":$c(8),c="t":$c(9),c="r":$c(10),c="f":$c(12),1:$c(13)),(pre,c)="" continue
+		if "\"=pre set str=$e(str,1,$l(str)-1)_$s("""/\"[c:c,c="b":$c(8),c="t":$c(9),c="r":$c(13),c="f":$c(12),1:$c(10)),(pre,c)="" continue
 		if """"=c,"\"'=pre set string=$s(string:0,1:1) continue
 		if string set str=str_c continue
 		if ":"=c set name=$method(ob,"bakedJsonName",str),str="" continue

@@ -29,6 +29,7 @@ Method OnBeforeAllTests() As %Status
 	set parent.Child=child
 	set parent.SameChild=child
 	set sc=parent.%Save()
+	do ..AssertEquals(sc,$$$OK,"Parent should save")
 	
 	quit $$$OK
 }
