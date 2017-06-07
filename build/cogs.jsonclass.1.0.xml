@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.2.1 (Build 803_1U)" ts="2017-06-07 10:17:43">
+<Class name="Cogs.JsonClass">
+<Description>
+Copyright (c) 2017 MemCog Ltd
+Set GitHub documentation for help</Description>
+<PropertyClass>Cogs.Lib.Json.Params</PropertyClass>
+<Super>Cogs.Lib.Json.ClassSerializer,Cogs.Lib.Json.ClassDeserializer</Super>
+<TimeChanged>64441,36391.56515</TimeChanged>
+<TimeCreated>63949,41076.823273</TimeCreated>
+</Class>
+
+
+<Class name="Cogs.Lib.Json.Base">
+<Description>
+Copyright (c) 2017 MemCog Ltd
+Set GitHub documentation for help</Description>
+<Super>%RegisteredObject</Super>
+<TimeChanged>64441,34909.741131</TimeChanged>
+<TimeCreated>63949,40322.004384</TimeCreated>
+
+<Method name="EscapeJSON">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>string:%String,escapeSolidus:%Boolean=1</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+	set string=$replace(string,$C(0),"")
+	set string=$replace(string,"\","\\")
+	if escapeSolidus=1 Set string=$replace(string,"/","\/")
+	set string=$replace(string,"""","\""")
+	set string=$replace(string,$C(8),"\b")
+	set string=$replace(string,$C(9),"\t")
+	set string=$replace(string,$C(10),"\r")
+	set string=$replace(string,$C(12),"\f")
+	set string=$replace(string,$C(13),"\n")
+	quit string
+]]></Implementation>
+</Method>
+</Class>
+
+
+<Class name="Cogs.Lib.Json.ClassDeserializer">
+<Description>
+Copyright (c) 2017 MemCog Ltd
+Set GitHub documentation for help</Description>
+<Super>%RegisteredObject</Super>
+<TimeChanged>64441,34919.716842</TimeChanged>
+<TimeCreated>63949,44964.56539</TimeCreated>
+
+<Method name="parseJSON">
+<ClassMethod>1</ClassMethod>
+<FormalSpec><![CDATA[&json:%String,wrapper:%String=""]]></FormalSpec>
+<ReturnType>%RegisteredObject</ReturnType>
+<Implementation><![CDATA[	quit ..parseObject(json,$find(json,"{",$s(wrapper'="":$f(json,wrapper),1:1)),$length(json))
+]]></Implementation>
+</Method>
+
+<Method name="parseObject">
+<Internal>1</Internal>
+<ClassMethod>1</ClassMethod>
+<FormalSpec><![CDATA[&json:%String,&p:%Integer=1,&l:%Integer=0]]></FormalSpec>
+<ReturnType>%RegisteredObject</ReturnType>
+<Implementation><![CDATA[
+	set (c,pre,string,str,name,ctype,cname)="",ob=..%New()
+	for p=p:1:l {
+		set pre=c,c=$e(json,p)
+		if ('string),(c'?1ANP) continue
+		if "\"=pre set str=$e(str,1,$l(str)-1)_$s("""/\"[c:c,c="b":$c(8),c="t":$c(9),c="r":$c(10),c="f":$c(12),1:$c(13)),(pre,c)="" continue
+		if """"=c,"\"'=pre set string=$s(string:0,1:1) continue
+		if string set str=str_c continue
+		if ":"=c set name=$method(ob,"bakedJsonName",str),str="" continue
+		if ("["=c),("]"=pre) set name="" continue
+		if "{"=c {
+			if ctype="" set ctype=$method(ob,"bakedCType",name)
+			if "%Collection.ArrayOfDT"=ctype set cname=name continue
+			if "%Collection.ListOfObj"=ctype set sc=$method($property(ob,cname),"Insert",$method(ob,"bakedDelegator",cname,.json,.p,.l)) continue
+			if "%Collection.ArrayOfObj"=ctype,(cname'="") set sc=$method($property(ob,cname),"SetAt",$method(ob,"bakedDelegator",cname,.json,.p,.l),name) continue 
+			if "%Collection.ArrayOfObj"=ctype,cname="" set cname=name continue
+			set $property(ob,name)=$method(ob,"bakedDelegator",name,.json,.p,.l) continue
+		}
+		if ((c=",")!(c="}")!(c="]")) {
+			if "}]"[pre continue
+			if "%Collection.ListOfDT"=ctype {
+				if '((pre="[")&&(c="]")) set sc=$method($property(ob,cname),"Insert",$method(ob,"normaliseValue",cname,str,pre=""""))
+			} elseif "%Collection.ArrayOfDT"=ctype {
+				if name'=cname set sc=$method($property(ob,cname),"SetAt",$method(ob,"normaliseValue",cname,str,pre=""""),name)
+			} else {
+				if str'="" if "{["'[pre set $property(ob,name)=$method(ob,"normaliseValue",name,str,pre="""")
+			}
+			if ("}"=c),(ctype="") g END
+			if ("]"=c)!("}"=c) set (cname,ctype)=""
+			set (name,str)="" continue
+		}
+		if "["=c set ctype=$method(ob,"bakedCType",name),cname=name,(name,str)="" continue
+		if "}"=c quit
+		set str=str_c
+	}
+END
+	quit ob
+]]></Implementation>
+</Method>
+
+<Method name="bakedDelegator">
+<Internal>1</Internal>
+<CodeMode>objectgenerator</CodeMode>
+<FormalSpec><![CDATA[pname:%String,&json:%String,&p:%Integer,&l:%Integer]]></FormalSpec>
+<ReturnType>%RegisteredObject</ReturnType>
+<Implementation><![CDATA[
+	for pc=1:1:%compiledclass.Properties.Count() {
+		set pr=%compiledclass.Properties.GetAt(pc)
+		if pr.Type?1A1.ANP do %code.WriteLine(" if """_pr.Name_"""=pname set p=p+1 quit ##class("_pr.Type_").parseObject(.json,.p,.l)")	
+	}
+	do %code.WriteLine(" quit """"")
+	quit 1
+]]></Implementation>
+</Method>
+
+<Method name="bakedCType">
+<Internal>1</Internal>
+<CodeMode>objectgenerator</CodeMode>
+<FormalSpec>pname:%String</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+	for pc=1:1:%compiledclass.Properties.Count() {
+		set pr=%compiledclass.Properties.GetAt(pc)
+		if (pr.Collection="array")!(pr.Collection="list") do %code.WriteLine(" if """_pr.Name_"""=pname quit """_pr.RuntimeType_"""")	
+	}
+	do %code.WriteLine(" quit """"")
+	quit 1
+]]></Implementation>
+</Method>
+
+<Method name="bakedJsonName">
+<Internal>1</Internal>
+<CodeMode>objectgenerator</CodeMode>
+<FormalSpec>pname:%String</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+	for pc=1:1:%compiledclass.Properties.Count() {
+		set pr=%compiledclass.Properties.GetAt(pc)
+		if pr.Parameters.GetAt("JSONNAME")'="" do %code.WriteLine(" if """_pr.Parameters.GetAt("JSONNAME")_"""=pname quit """_pr.Name_"""")
+	}
+	do %code.WriteLine(" quit pname")
+	quit 1
+]]></Implementation>
+</Method>
+
+<Method name="normaliseValue">
+<Internal>1</Internal>
+<CodeMode>objectgenerator</CodeMode>
+<FormalSpec>pname:%String,pval,quoted</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+	for pc=1:1:%compiledclass.Properties.Count() {
+		set pr=%compiledclass.Properties.GetAt(pc)
+		if "%Library.String"=pr.Type do %code.WriteLine(" if """_pr.Name_"""=pname quit $s(quoted:pval,pval=""null"":$c(0),1:pval)")
+		if "%Library.Date"=pr.Type do %code.WriteLine(" if """_pr.Name_"""=pname quit $s(pval=""null"":"""",1:$zdh($e(pval,1,10),3,,,,,,,$c(0)))")
+		if "%Library.Time"=pr.Type do %code.WriteLine(" if """_pr.Name_"""=pname quit $s(pval=""null"":"""",1:$zth(pval))")
+		if "%Library.TimeStamp"=pr.Type do %code.WriteLine(" if """_pr.Name_"""=pname quit $s(pval=""null"":"""",1:$e(pval,1,10)_"" ""_$e(pval,12,19))")
+		if "%Library.Boolean"=pr.Type do %code.WriteLine(" if """_pr.Name_"""=pname quit $s(pval=""true"":1,pval=""false"":0,1:"""")")
+		if "%Library.Float %Library.Integer %Library.Numeric %Library.Currency"[pr.Type do %code.WriteLine(" if """_pr.Name_"""=pname quit $s(pval=""null"":"""",1:pval)")
+	}
+	do %code.WriteLine(" quit pval")
+	quit 1
+]]></Implementation>
+</Method>
+</Class>
+
+
+<Class name="Cogs.Lib.Json.ClassSerializer">
+<Description>
+Copyright (c) 2017 MemCog Ltd
+Set GitHub documentation for help</Description>
+<Super>Cogs.Lib.Json.Base</Super>
+<TimeChanged>64441,34927.013228</TimeChanged>
+<TimeCreated>63949,44967.513209</TimeCreated>
+
+<Method name="toJSON">
+<CodeMode>objectgenerator</CodeMode>
+<FormalSpec>parent</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+	set x=%code
+	d x.WriteLine(" if $g(parent)'="""" set j=""{""""""_parent_"""""":""")
+	d x.WriteLine(" set j=$g(j)_""{""")
+	set co="",cc=0
+	for i=1:1:%compiledclass.Properties.Count() {
+		set p=%compiledclass.Properties.GetAt(i),name=p.Name
+		if p.Parameters.GetAt("JSONIGNORE")=1 continue
+		if $e(p.Name)'?1A continue
+		if p.RuntimeType="%Library.RelationshipObject" continue
+		if cc>0 set co=","
+		set cc=cc+1
+		if p.Parameters.GetAt("JSONNAME")'="" set name=p.Parameters.GetAt("JSONNAME")
+		if p.Parameters.GetAt("JSONMETHOD")'="" {
+			d x.WriteLine(" set j=j_"""_co_""""""_name_""""":""""""_"_p.Parameters.GetAt("JSONMETHOD")_"_""""""""")
+			continue
+		}
+		if "%Collection.ArrayOfDT"=p.RuntimeType {
+			d x.WriteLine(" set j=j_"""_co_""""""_name_""""":{"",c2="""",key=.."_p.Name_".Next("""")")
+			d x.WriteLine(" while key'="""" {")
+			d x.WriteLine("  set value=.."_p.Name_".GetAt(key)")
+			d x.WriteLine("  Set j=j_c2_""""""""_key_""""""""_"":""_$s(value=$c(0):""null"",1:"_..getTypeWriter(p.Type)_")")
+			d x.WriteLine("  set key=.."_p.Name_".Next(key),c2="",""")
+			d x.WriteLine(" }")
+			d x.WriteLine(" set j=j_""}""")
+			continue						
+		}
+		if "%Collection.ArrayOfObj"=p.RuntimeType {
+			d x.WriteLine(" set j=j_"""_co_""""""_name_""""":{"",c2="""",key=.."_p.Name_".Next("""")")
+			d x.WriteLine(" while key'="""" {")
+			d x.WriteLine("  set o=.."_p.Name_".GetAt(key)")
+			d x.WriteLine("   set j=j_c2_""""""""_key_""""""""_"":""_o.toJSON(),c2="",""")
+			d x.WriteLine("  set key=.."_p.Name_".Next(key),c2="",""")
+			d x.WriteLine(" }")
+			d x.WriteLine(" set j=j_""}""")
+			continue					
+		}
+		if "%Collection.ListOfDT"=p.RuntimeType {
+			d x.WriteLine(" set j=j_"""_co_""""""_name_""""":["",c2=""""")
+			d x.WriteLine(" for i=1:1:.."_p.Name_".Count() {")
+			d x.WriteLine("  set value=.."_p.Name_".GetAt(i)")
+			d x.WriteLine("  set j=j_c2_$s(value=$c(0):""null"",1:"_..getTypeWriter(p.Type)_"),c2="",""")
+			d x.WriteLine(" }")
+			d x.WriteLine(" set j=j_""]""")
+			continue					
+		}
+		if "%Collection.ListOfObj"=p.RuntimeType {
+			d x.WriteLine(" set j=j_"""_co_""""""_name_""""":["",c2=""""")
+			d x.WriteLine(" for i=1:1:.."_p.Name_".Count() {")
+			d x.WriteLine("  set obj=.."_p.Name_".GetAt(i)")
+			d x.WriteLine("  set j=j_c2_obj.toJSON(),c2="",""")
+			d x.WriteLine(" }")
+			d x.WriteLine(" set j=j_""]""")
+			continue					
+		}
+		d x.WriteLine(" set value=.."_p.Name)
+		d x.WriteLine(" Set j=j_"""_co_""""""_name_""""":""_$s(value=$c(0):""null"",1:"_..getTypeWriter(p.Type)_")")
+	}
+	d x.WriteLine(" set j=j_""}""")
+	d x.WriteLine(" if $g(parent)'="""" set j=j_""}""")
+	d x.WriteLine(" quit j")
+	quit 1
+]]></Implementation>
+</Method>
+
+<Method name="getTypeWriter">
+<Internal>1</Internal>
+<ClassMethod>1</ClassMethod>
+<FormalSpec>type</FormalSpec>
+<Implementation><![CDATA[
+	set quotes=""""""""""
+	if "Cogs.Lib.Types.Json"=type q "$Select(value'="""":value,1:"""""""""""")"
+	if "%Library.Time"=type q "$s(value'="""":"_quotes_"_$zt(value)_"_quotes_",1:""null"")"
+	if "%Library.Date"=type q "$s(value'="""":"_quotes_"_$zd(value,3)_"_quotes_",1:""null"")"
+	if "%Library.TimeStamp"=type q "$s(value'="""":"_quotes_"_$p(value,"" "",1)_""T""_$p(value,"" "",2)_"_quotes_",1:""null"")"
+	if "%Library.Boolean"=type q "$s(value=1:""true"",value=0:""false"",1:""null"")"
+	if "%Library.Float %Library.Integer %Library.Numeric %Library.Currency"[type q "$s($e(value,1,2)=""0."":value,$e(value,1)=""."":""0""_value,""0""=$e(value,1):""""""""_value_"""""""",value'="""":+value,1:""null"")"
+	if "%"=$e(type) q quotes_"_..EscapeJSON(value)_"_quotes
+	quit "$s($IsObject(value):value.toJSON(),value="""":$C(34,34),1:"_quotes_"_..EscapeJSON(value)_"_quotes_")"
+]]></Implementation>
+</Method>
+</Class>
+
+
+<Class name="Cogs.Lib.Json.Params">
+<TimeChanged>64441,33999.10585</TimeChanged>
+<TimeCreated>64434,59065.087173</TimeCreated>
+
+<Parameter name="JSONNAME">
+<Type>%String</Type>
+</Parameter>
+
+<Parameter name="JSONIGNORE">
+<Type>%Boolean</Type>
+</Parameter>
+
+<Parameter name="JSONMETHOD">
+<Type>%String</Type>
+</Parameter>
+</Class>
+
+
+<Class name="Cogs.Lib.Types.Json">
+<Description>
+Copyright (c) 2017 MemCog Ltd
+Set GitHub documentation for help</Description>
+<Super>%Library.String</Super>
+<TimeChanged>64441,34947.243038</TimeChanged>
+<TimeCreated>63993,33577.525468</TimeCreated>
+
+<Parameter name="MAXLEN">
+<Description>
+The maximum number of characters the string can contain.</Description>
+<Type>INTEGER</Type>
+<Default>1000000</Default>
+</Parameter>
+
+<Method name="parseObject">
+<ClassMethod>1</ClassMethod>
+<FormalSpec><![CDATA[&json:%String,&p:%Integer=1,&l:%Integer=0]]></FormalSpec>
+<ReturnType>%RegisteredObject</ReturnType>
+<Implementation><![CDATA[
+	set string="{"
+	set qflag=0
+	set count=1
+	set previous=""
+	while count>0
+	{
+		set char=$e(json,p)
+		if char="""",previous'="\" set qflag='qflag
+		if char="{",'qflag set count=count+1
+		if char="}",'qflag set count=count-1
+		set string=string_char
+		set previous=char
+		set p=p+1
+	}
+	quit string
+]]></Implementation>
+</Method>
+</Class>
+
+
+<Project name="JsonClass" LastModified="2017-06-07 10:17:43.658381">
+  <Items>
+    <ProjectItem name="Cogs.Lib.Json.Base" type="CLS"></ProjectItem>
+    <ProjectItem name="Cogs.Lib.Json.ClassDeserializer" type="CLS"></ProjectItem>
+    <ProjectItem name="Cogs.Lib.Json.ClassSerializer" type="CLS"></ProjectItem>
+    <ProjectItem name="Cogs.Lib.Json.Params" type="CLS"></ProjectItem>
+    <ProjectItem name="Cogs.Lib.Types.Json" type="CLS"></ProjectItem>
+    <ProjectItem name="Cogs.JsonClass" type="CLS"></ProjectItem>
+  </Items>
+</Project>
+</Export>
