@@ -1,6 +1,6 @@
 /// Copyright (c) 2017 MemCog Ltd
 /// Test fix for repeating object references
-Class Cogs.Lib.Json.Tests.JsonClassTest3 Extends Cogs.Touchstone.TestClass
+Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest3 Extends Cogs.Touchstone.TestClass
 {
 
 Parameter TestSuiteName = "Cogs.Lib.JSON";
@@ -8,17 +8,17 @@ Parameter TestSuiteName = "Cogs.Lib.JSON";
 Method OnBeforeAllTests() As %Status
 {
 	
-	do ##class(Cogs.Lib.Json.Tests.ChildTestClass).%DeleteExtent()
-	do ##class(Cogs.Lib.Json.Tests.ParentTestClass).%DeleteExtent()
+	do ##class(Cogs.Lib.Json.Tests.JsonClass.ChildTestClass).%DeleteExtent()
+	do ##class(Cogs.Lib.Json.Tests.JsonClass.ParentTestClass).%DeleteExtent()
 	
 	//create parent
-	set parent=##class(Cogs.Lib.Json.Tests.ParentTestClass).%New()
+	set parent=##class(Cogs.Lib.Json.Tests.JsonClass.ParentTestClass).%New()
 	set parent.Foo="World"
 	set sc=parent.%Save()
 	do ..AssertEquals(sc,$$$OK,"Parent should save")
 
 	//create child
-	set child=##class(Cogs.Lib.Json.Tests.ChildTestClass).%New()
+	set child=##class(Cogs.Lib.Json.Tests.JsonClass.ChildTestClass).%New()
 	set child.Bar="Hello"
 	set child.Parent=parent
 	set child.SameParent=parent
@@ -36,7 +36,7 @@ Method OnBeforeAllTests() As %Status
 
 Method Test1() As %Status(UNITTEST=1)
 {
-	set parent=##class(Cogs.Lib.Json.Tests.ParentTestClass).%OpenId(1)
+	set parent=##class(Cogs.Lib.Json.Tests.JsonClass.ParentTestClass).%OpenId(1)
 	set json=parent.toJSON()
 	do ..AssertEquals(json,"{""Child"":{""Bar"":""Hello"",""Parent"":{},""SameParent"":{}},""Foo"":""World"",""SameChild"":{""Bar"":""Hello"",""Parent"":{},""SameParent"":{}}}","Should not fall into an infinite loop")
 	quit $$$OK
