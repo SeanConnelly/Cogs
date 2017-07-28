@@ -14,6 +14,7 @@ ClassMethod parseObject(ByRef json As %String, ByRef p As %Integer = 1, ByRef l 
 	for p=p:1:l {
 		set ct=$e(json,p) if ((ct=" ")||(ct'?1ANP)),'string continue
 		set pre=c,c=ct
+		if "\"=pre,c="u" set esc=##class(%xsd.hexBinary).XSDToLogical($e(json,p+3,p+4)),str=$e(str,1,$l(str)-1)_esc,p=p+4,(pre,c)="" continue
 		if "\"=pre set str=$e(str,1,$l(str)-1)_$s("""/\"[c:c,c="b":$c(8),c="t":$c(9),c="r":$c(13),c="f":$c(12),1:$c(10)),(pre,c)="" continue
 		if """"=c,"\"'=pre set string=$s(string:0,1:1) continue
 		if string set str=str_c continue

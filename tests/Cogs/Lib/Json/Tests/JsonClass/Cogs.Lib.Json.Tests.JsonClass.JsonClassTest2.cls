@@ -3,7 +3,7 @@
 Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest2 Extends Cogs.Touchstone.TestClass
 {
 
-Parameter TestSuiteName = "Cogs.Lib.JSON";
+Parameter TestSuiteName = "Cogs.Lib.JsonClassSuite";
 
 Method OnBeforeAllTests() As %Status
 {
@@ -45,14 +45,13 @@ Method Test3() As %Status(UNITTEST=1)
 
 Method Test4() As %Status(UNITTEST=1)
 {
-	set person=##class(Cogs.Lib.Json.Tests.JsonClass.StoredTestClass).%OpenId(2)
+	set person=##class(Cogs.Lib.Json.Tests.JsonClass.StoredTestClass).%OpenId(1)
 	do ..AssertEquals(person.FirstName,"Sean","Test FirstName is correct")
 	do ..AssertEquals(person.LastName,"Connelly","Test LastName is correct")
 	do ..AssertEquals(person.DateOfBirth,47379,"Test DateOfBirth is correct")
 	do ..AssertEquals(person.Hobbies.GetAt(1),"Photography","Test Hobbies 1 is correct")
 	do ..AssertEquals(person.Hobbies.GetAt(2),"Football","Test Hobbies 2 is correct")
 	do ..AssertEquals(person.Hobbies.GetAt(3),"Walking","Test Hobbies 3 is correct")
-	do ..AssertEquals(person.Secret,"","Test Secret is empty")
 	quit $$$OK
 }
 

@@ -121,7 +121,7 @@ ClassMethod CreateTestObject1() As Cogs.Lib.Json.Tests.JsonClass.UberTestClass
 	set test.TestLongString="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
 	set test.TestLongNumber=49947976805055875840000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 	set test.TestString="{[{\}[/][{[""FOO"","""""""""""""""""""""""""""""""""",""BAR""]}]{\}[/]]}"
-	for i=32:1:127 set all=$get(all)_$c(i)
+	for i=0:1:127 set all=$get(all)_$c(i)
 	set test.TestAllAsciiChars=all
 	do test.TestListOfString.Insert("Sherlock Holmes")
 	do test.TestListOfString.Insert("221B Baker Street")
@@ -217,7 +217,7 @@ ClassMethod CreateTestObject2() As Cogs.Lib.Json.Tests.JsonClass.UberTestClass
 	set test.TestLongNumber=49947976805055875840000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 	set test.TestString="{[{\}[/][{[""FOO"","""""""""""""""""""""""""""""""""",""BAR""]}]{\}[/]]}"
 	set test.TestRawJson="{""TestAllAsciiChars"":"" !\""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"_$c(127)_""",""TestArrayOfBoolean"":{""ALPHA"":true,""CHARLIE"":false,""DELTA"":null,""ECHO"":false,""FOXTROT"":true},""TestArrayOfDate"":{""Happy-Horolog :)"":""1840-12-31"",""doB"":""2126-12-16"",""nully"":null},""TestArrayOfInteger"":{""A THOUSAND!"":1000,""NINETY NINE"":99,""ONE"":1,""THREE"":3,""TWO"":2,""WORLD DEBT $"":59546526326827,""WORLD WORTH $"":241000000000000,""nully"":null},""TestArrayOfObject"":{},""TestArrayOfString"":{""City"":""London W1"",""Country"":""UK"",""Detective"":""Sherlock Holmes"",""District"":""Marylebone"",""FOOBAR"":""{[{\\}[/][{[FOO,BAR]}]{\\}[/]]}"",""Street"":""221B Baker Street"",""b4d,Th1ng5!"":""\\\""\\\""/\""\b\t\n\f\r"",""not-nully"":"""",""nully"":null},""TestBooleanNo"":false,""TestBooleanYes"":true,""TestDate"":""2017-06-10"",""TestEmptyArrayOfBoolean"":{},""TestEmptyArrayOfDate"":{},""TestEmptyArrayOfInteger"":{},""TestEmptyArrayOfString"":{},""TestEmptyListOfBoolean"":[],""TestEmptyListOfOfDate"":[],""TestEmptyListOfOfInteger"":[],""TestEmptyListOfString"":[],""TestEscapes"":""\\\""\\\""/\""\b\t\n\f\r"",""TestInteger"":42,""TestListOfBoolean"":[true,false,false,null,true,false,true,true,false],""TestListOfObject"":[],""TestListOfOfDate"":[""1840-12-31"",""1841-01-10"",""1841-04-10"",""1843-09-27"",null,""1868-05-18"",""2114-10-16"",""4578-11-27""],""TestListOfOfInteger"":[""0"",43564356546456,0.345,0.2,null,-464356.75675,76567,3.141592653589793238,7653475667,-65753,45676.56,-6807.383887076754324],""TestListOfString"":[""Sherlock Holmes"",""221B Baker Street"",""Marylebone"",""London W1"",""UK"",null,""{[{\\}[/][{[FOO,BAR]}]{\\}[/]]}"",""\\\""\\\""/\""\b\t\n\f\r"",""0"",""1"",""345345345345345345400""],""TestLongNumber"":49947976805055875840000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,""TestLongString"":""Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"",""TestNotBoolean1"":""true"",""TestNotBoolean2"":""false"",""TestNullBoolean"":null,""TestNullDate"":null,""TestNullInteger"":null,""TestNullString"":null,""TestNullTimestamp"":null,""TestRawJson"":"""",""TestSingleObject"":"""",""TestString"":""{[{\\}[/][{[\""FOO\"",\""\""\""\""\""\""\""\""\""\""\""\""\""\""\""\""\"",\""BAR\""]}]{\\}[/]]}"",""TestStringNotNull"":"""",""TestStringOfJSON"":""{\""menu\"": { \""id\"": \""file\"", \""value\"": \""File\"", \""popup\"": { \""menuitem\"": [ {\""value\"": \""New\"", \""onclick\"": \""CreateNewdoc()\""}, {\""value\"": \""Open\"", \""onclick\"": \""Opendoc()\""}, {\""value\"": \""Close\"", \""onclick\"": \""Closedoc()\""} ] }}}"",""TestTime"":""01:14:04"",""TestTimestamp"":""1966-01-27T23:12:02"",""TestTimestampShort"":""1966-01-27T00:00:00"",""TestZero"":null,""ZTestJsonMethod"":""LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA COMMODO CONSEQUAT. DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR. EXCEPTEUR SINT OCCAECAT CUPIDATAT NON PROIDENT, SUNT IN CULPA QUI OFFICIA DESERUNT MOLLIT ANIM ID EST LABORUM. SED UT PERSPICIATIS UNDE OMNIS ISTE NATUS ERROR SIT VOLUPTATEM ACCUSANTIUM DOLOREMQUE LAUDANTIUM, TOTAM REM APERIAM, EAQUE IPSA QUAE AB ILLO INVENTORE VERITATIS ET QUASI ARCHITECTO BEATAE VITAE DICTA SUNT EXPLICABO. NEMO ENIM IPSAM VOLUPTATEM QUIA VOLUPTAS SIT ASPERNATUR AUT ODIT AUT FUGIT, SED QUIA CONSEQUUNTUR MAGNI DOLORES EOS QUI RATIONE VOLUPTATEM SEQUI NESCIUNT. NEQUE PORRO QUISQUAM EST, QUI DOLOREM IPSUM QUIA DOLOR SIT AMET, CONSECTETUR, ADIPISCI VELIT, SED QUIA NON NUMQUAM EIUS MODI TEMPORA INCIDUNT UT LABORE ET DOLORE MAGNAM ALIQUAM QUAERAT VOLUPTATEM. UT ENIM AD MINIMA VENIAM, QUIS NOSTRUM EXERCITATIONEM ULLAM CORPORIS SUSCIPIT LABORIOSAM, NISI UT ALIQUID EX EA COMMODI CONSEQUATUR? QUIS AUTEM VEL EUM IURE REPREHENDERIT QUI IN EA VOLUPTATE VELIT ESSE QUAM NIHIL MOLESTIAE CONSEQUATUR, VEL ILLUM QUI DOLOREM EUM FUGIAT QUO VOLUPTAS NULLA PARIATUR?"",""_id"":""FOO""}"
-	for i=32:1:127 set all=$get(all)_$c(i)
+	for i=0:1:127 set all=$get(all)_$c(i)
 	set test.TestAllAsciiChars=all
 	do test.TestListOfString.Insert("Sherlock Holmes")
 	do test.TestListOfString.Insert("221B Baker Street")
@@ -297,9 +297,9 @@ ClassMethod CreateTestObject3() As Cogs.Lib.Json.Tests.JsonClass.UberTestClass
 	do uber.TestListOfObject.Insert(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1())
 	do uber.TestListOfObject.Insert(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1())
 	do uber.TestListOfObject.Insert(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1())
-	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1(),"ONE")
-	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1(),"TWO")
-	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1(),"THREE")
+	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1(),"TEST3.1")
+	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1(),"TEST3.2")
+	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1(),"TEST3.3")
 	quit uber
 }
 
@@ -310,10 +310,10 @@ ClassMethod CreateTestObject4() As Cogs.Lib.Json.Tests.JsonClass.UberTestClass
 	set uber.TestSingleObject=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3()
 	do uber.TestListOfObject.Insert(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3())
 	do uber.TestListOfObject.Insert(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3())
-	//do uber.TestListOfObject.Insert(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3())
-	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3(),"ONE")
-	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3(),"TWO")
-	//do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3(),"THREE")
+	do uber.TestListOfObject.Insert(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3())
+	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3(),"TEST4.1")
+	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3(),"TEST4.2")
+	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject3(),"TEST4.3")
 	quit uber
 }
 
@@ -323,11 +323,7 @@ ClassMethod CreateTestObject5() As Cogs.Lib.Json.Tests.JsonClass.UberTestClass
 	set uber=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4()
 	set uber.TestSingleObject=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4()
 	do uber.TestListOfObject.Insert(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4())
-	do uber.TestListOfObject.Insert(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4())
-	//do uber.TestListOfObject.Insert(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4())
-	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4(),"ONE")
-	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4(),"TWO")
-	//do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4(),"THREE")
+	do uber.TestArrayOfObject.SetAt(##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4(),"TEST5.1")
 	quit uber
 }
 

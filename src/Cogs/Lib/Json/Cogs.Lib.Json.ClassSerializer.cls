@@ -6,7 +6,7 @@ Class Cogs.Lib.Json.ClassSerializer Extends Cogs.Lib.Json.Base
 Method toJSON(parent = "", ByRef seen = "") As %String [ CodeMode = objectgenerator ]
 {
 	set x=%code
-	d x.WriteLine(" if $g(seen($THIS))=1 set ^debug2($zh,$THIS)=1 quit ""{}""")
+	d x.WriteLine(" if $g(seen($THIS))=1 quit ""{}""")
 	d x.WriteLine(" set seen($THIS)=1")
 	d x.WriteLine(" if $g(parent)'="""" set j=""{""""""_parent_"""""":""")
 	d x.WriteLine(" set j=$g(j)_""{""")
@@ -145,7 +145,6 @@ ClassMethod getTypeWriter(type, mode = 0) [ Internal ]
 	if "Cogs.Lib.Types.Json"=type q "$Select(value'="""":value,1:"""""""""""")"
 	if "%Library.Time"=type q "$s(value'="""":"_quotes_"_$zt(value)_"_quotes_",1:""null"")"
 	if "%Library.Date"=type q "$s(value'="""":"_quotes_"_$zd(value,3)_"_quotes_",1:""null"")"
-	//if "%Library.TimeStamp"=type q "$s(value'="""":"_quotes_"_$p(value,"" "",1)_""T""_$p(value,"" "",2)_"_quotes_",1:""null"")"
 	if "%Library.TimeStamp"=type q "$s(value'="""":"_quotes_"_$tr(value,"" "",""T"")_""Z""_"_quotes_",1:""null"")"
 	if "%Library.Boolean"=type q "$s(value=1:""true"",value=0:""false"",1:""null"")"
 	if "%Library.Float %Library.Integer %Library.Numeric %Library.Currency"[type q "$s($e(value,1,2)=""0."":value,$e(value,1)=""."":""0""_value,""0""=$e(value,1):""""""""_value_"""""""",value'="""":+value,1:""null"")"

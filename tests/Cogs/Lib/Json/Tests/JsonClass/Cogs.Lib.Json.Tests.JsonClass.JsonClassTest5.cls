@@ -3,7 +3,7 @@
 Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest5 Extends Cogs.Touchstone.TestClass
 {
 
-Parameter TestSuiteName = "Cogs.Lib.JSON";
+Parameter TestSuiteName = "Cogs.Lib.JsonClassSuite";
 
 Method Test1() As %Status(UNITTEST=1)
 {

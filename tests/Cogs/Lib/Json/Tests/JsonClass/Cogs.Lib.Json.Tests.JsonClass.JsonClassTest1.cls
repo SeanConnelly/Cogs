@@ -3,7 +3,7 @@
 Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest1 Extends Cogs.Touchstone.TestClass
 {
 
-Parameter TestSuiteName = "Cogs.Lib.JSON";
+Parameter TestSuiteName = "Cogs.Lib.JsonClassSuite";
 
 Method Test1() As %Status(UNITTEST=1)
 {
@@ -11,7 +11,7 @@ Method Test1() As %Status(UNITTEST=1)
 	set json1=testObject1.toJSON("data")
 	set testObject2=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).parseJSON(json1,"data")
 	set json2=testObject2.toJSON("data")
-	for i=32:1:127 set all=$get(all)_$c(i)
+	for i=0:1:127 set all=$get(all)_$c(i)
 	do ..AssertEquals(testObject1.TestAllAsciiChars,all,"Test all ASCII characters 1")
 	do ..AssertEquals(testObject2.TestAllAsciiChars,all,"Test all ASCII characters 2")
 	do ..AssertEquals(json1,json2,"Test serialisation to de-serialisation and back again is an exact match 1")
@@ -116,11 +116,11 @@ Method Test7() As %Status(UNITTEST=1)
 	do ..AssertEquals(checkJson,json4,"List object 2 should match original")
 	set json5=testObject2.TestListOfObject.GetAt(3).toJSON()
 	do ..AssertEquals(checkJson,json5,"List object 3 should match original")
-	set json6=testObject2.TestArrayOfObject.GetAt("ONE").toJSON()
+	set json6=testObject2.TestArrayOfObject.GetAt("TEST3.1").toJSON()
 	do ..AssertEquals(checkJson,json6,"Array object 1 should match original")
-	set json7=testObject2.TestArrayOfObject.GetAt("TWO").toJSON()
+	set json7=testObject2.TestArrayOfObject.GetAt("TEST3.2").toJSON()
 	do ..AssertEquals(checkJson,json7,"Array object 2 should match original")
-	set json8=testObject2.TestArrayOfObject.GetAt("THREE").toJSON()
+	set json8=testObject2.TestArrayOfObject.GetAt("TEST3.3").toJSON()
 	do ..AssertEquals(checkJson,json8,"Array object 3 should match original")
 	quit $$$OK
 }
