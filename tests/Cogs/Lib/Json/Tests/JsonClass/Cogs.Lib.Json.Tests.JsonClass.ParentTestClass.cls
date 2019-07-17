@@ -1,3 +1,5 @@
+/// Copyright (c) 2019 MemCog Ltd
+/// Set GitHub documentation for help
 Class Cogs.Lib.Json.Tests.JsonClass.ParentTestClass Extends (%Persistent, Cogs.JsonClass)
 {
 
@@ -7,7 +9,8 @@ Property SameChild As Cogs.Lib.Json.Tests.JsonClass.ChildTestClass;
 
 Property Foo As %String;
 
-<Storage name="Default">
+Storage Default
+{
 <Data name="ParentTestClassDefaultData">
 <Value name="1">
 <Value>%%CLASSNAME</Value>
@@ -29,6 +32,7 @@ Property Foo As %String;
 <IndexLocation>^Cogs.Lib.J7A8C.ParentTestC47A0I</IndexLocation>
 <StreamLocation>^Cogs.Lib.J7A8C.ParentTestC47A0S</StreamLocation>
 <Type>%Library.CacheStorage</Type>
-</Storage>
+}
+
 }
 

@@ -1,10 +1,10 @@
-/// Copyright (c) 2017 MemCog Ltd
+/// Copyright (c) 2019 MemCog Ltd
 /// Set GitHub documentation for help
 Class Cogs.Lib.Types.Json Extends %Library.String
 {
 
 /// The maximum number of characters the string can contain.
-Parameter MAXLEN As INTEGER = 1000000;
+Parameter MAXLEN As INTEGER = 3000000;
 
 ClassMethod parseObject(ByRef json As %String, ByRef p As %Integer = 1, ByRef l As %Integer = 0) As %RegisteredObject
 {

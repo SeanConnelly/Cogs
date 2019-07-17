@@ -1,4 +1,4 @@
-/// Copyright (c) 2017 MemCog Ltd
+/// Copyright (c) 2019 MemCog Ltd
 /// Set GitHub documentation for help
 Class Cogs.Lib.Json.Tests.JsonClass.StoredTestClass Extends (%Persistent, Cogs.JsonClass)
 {
@@ -13,7 +13,8 @@ Property Secret As %String(JSONIGNORE = 1);
 
 Property Hobbies As list Of %String;
 
-<Storage name="Default">
+Storage Default
+{
 <Data name="StoredTestClassDefaultData">
 <Value name="1">
 <Value>%%CLASSNAME</Value>
@@ -41,6 +42,7 @@ Property Hobbies As list Of %String;
 <IndexLocation>^Cogs.Lib.J7A8C.StoredTestCCBCAI</IndexLocation>
 <StreamLocation>^Cogs.Lib.J7A8C.StoredTestCCBCAS</StreamLocation>
 <Type>%Library.CacheStorage</Type>
-</Storage>
+}
+
 }
 

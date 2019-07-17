@@ -1,17 +1,15 @@
-/// Copyright (c) 2017 MemCog Ltd
+/// Copyright (c) 2019 MemCog Ltd
 /// Set GitHub documentation for help
-Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest2 Extends Cogs.Touchstone.TestClass
+Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest2 Extends Cogs.Lib.Json.Tests.Runner
 {
 
-Parameter TestSuiteName = "Cogs.Lib.JsonClassSuite";
-
-Method OnBeforeAllTests() As %Status
+ClassMethod OnBeforeAllTests() As %Status
 {
 	do ##class(Cogs.Lib.Json.Tests.JsonClass.StoredTestClass).%DeleteExtent()
 	Quit $$$OK
 }
 
-Method Test1() As %Status(UNITTEST=1)
+ClassMethod Test1() As %Status(UNITTEST=1)
 {
 	set person=##class(Cogs.Lib.Json.Tests.JsonClass.StoredTestClass).%New()
 	set person.FirstName="Sean"
@@ -26,7 +24,7 @@ Method Test1() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test2() As %Status(UNITTEST=1)
+ClassMethod Test2() As %Status(UNITTEST=1)
 {
 	set person=##class(Cogs.Lib.Json.Tests.JsonClass.StoredTestClass).%OpenId(1)
 	set json=person.toJSON()
@@ -34,7 +32,7 @@ Method Test2() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test3() As %Status(UNITTEST=1)
+ClassMethod Test3() As %Status(UNITTEST=1)
 {
 	set json="{""BirthDate"":""1970-09-20"",""FirstName"":""Sean"",""Hobbies"":[""Photography"",""Football"",""Walking""],""LastName"":""Connelly""}"
 	set person=##class(Cogs.Lib.Json.Tests.JsonClass.StoredTestClass).parseJSON(json)
@@ -43,7 +41,7 @@ Method Test3() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test4() As %Status(UNITTEST=1)
+ClassMethod Test4() As %Status(UNITTEST=1)
 {
 	set person=##class(Cogs.Lib.Json.Tests.JsonClass.StoredTestClass).%OpenId(1)
 	do ..AssertEquals(person.FirstName,"Sean","Test FirstName is correct")

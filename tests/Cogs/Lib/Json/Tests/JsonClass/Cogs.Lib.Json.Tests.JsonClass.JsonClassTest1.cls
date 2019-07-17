@@ -1,11 +1,9 @@
-/// Copyright (c) 2017 MemCog Ltd
+/// Copyright (c) 2019 MemCog Ltd
 /// Set GitHub documentation for help
-Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest1 Extends Cogs.Touchstone.TestClass
+Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest1 Extends Cogs.Lib.Json.Tests.Runner
 {
 
-Parameter TestSuiteName = "Cogs.Lib.JsonClassSuite";
-
-Method Test1() As %Status(UNITTEST=1)
+ClassMethod Test1() As %Status(UNITTEST=1)
 {
 	set testObject1=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1()
 	set json1=testObject1.toJSON("data")
@@ -47,7 +45,7 @@ Method Test1() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test2() As %Status(UNITTEST=1)
+ClassMethod Test2() As %Status(UNITTEST=1)
 {
 	set testObject1=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject2()
 	set json1=testObject1.toJSON("data")
@@ -57,7 +55,7 @@ Method Test2() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test3() As %Status(UNITTEST=1)
+ClassMethod Test3() As %Status(UNITTEST=1)
 {
 	set testObject1=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject2()
 	set testObject1.TestInteger=0.12345
@@ -67,7 +65,7 @@ Method Test3() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test4() As %Status(UNITTEST=1)
+ClassMethod Test4() As %Status(UNITTEST=1)
 {
 	set testObject1=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject2()
 	set testObject1.TestInteger=.12345
@@ -77,7 +75,7 @@ Method Test4() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test5() As %Status(UNITTEST=1)
+ClassMethod Test5() As %Status(UNITTEST=1)
 {
 	set testObject1=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject2()
 	set testObject1.TestInteger=0
@@ -89,7 +87,7 @@ Method Test5() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test6() As %Status(UNITTEST=1)
+ClassMethod Test6() As %Status(UNITTEST=1)
 {
 	set testObject1=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject2()
 	set testObject1.TestInteger="012345"
@@ -99,7 +97,7 @@ Method Test6() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test7() As %Status(UNITTEST=1)
+ClassMethod Test7() As %Status(UNITTEST=1)
 {
 	set checkObject=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1()
 	set checkJson=checkObject.toJSON()
@@ -125,7 +123,7 @@ Method Test7() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test8() As %Status(UNITTEST=1)
+ClassMethod Test8() As %Status(UNITTEST=1)
 {
 	set testObject1=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4()
 	set json1=testObject1.toJSON("data")
@@ -135,7 +133,7 @@ Method Test8() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test9() As %Status(UNITTEST=1)
+ClassMethod Test9() As %Status(UNITTEST=1)
 {
 	set testObject1=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4()
 	set json1=testObject1.toJSON("data")

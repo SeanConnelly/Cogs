@@ -1,4 +1,4 @@
-/// Copyright (c) 2017 MemCog Ltd
+/// Copyright (c) 2019 MemCog Ltd
 /// Set GitHub documentation for help
 Class Cogs.Lib.Json.ClassDeserializer Extends %RegisteredObject
 {

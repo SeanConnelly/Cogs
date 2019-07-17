@@ -1,11 +1,9 @@
-/// Copyright (c) 2017 MemCog Ltd
-/// Test fix for repeating object references
-Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest4 Extends Cogs.Touchstone.TestClass
+/// Copyright (c) 2019 MemCog Ltd
+/// Set GitHub documentation for help
+Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest4 Extends Cogs.Lib.Json.Tests.Runner
 {
 
-Parameter TestSuiteName = "Cogs.Lib.JsonClassSuite";
-
-Method Test1() As %Status(UNITTEST=1)
+ClassMethod Test1() As %Status(UNITTEST=1)
 {
 	set uber=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject1()
 	set json1=uber.toJSON()
@@ -14,7 +12,7 @@ Method Test1() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test2() As %Status(UNITTEST=1)
+ClassMethod Test2() As %Status(UNITTEST=1)
 {
 	set uber=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject4()
 	set json1=uber.toJSON()
@@ -23,7 +21,7 @@ Method Test2() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test3() As %Status(UNITTEST=1)
+ClassMethod Test3() As %Status(UNITTEST=1)
 {
 	set uber=##class(Cogs.Lib.Json.Tests.JsonClass.UberTestClass).CreateTestObject5()
 	set json1=uber.toJSON()
@@ -32,24 +30,20 @@ Method Test3() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test4() As %Status(UNITTEST=1)
+ClassMethod Test4() As %Status(UNITTEST=1)
 {
 	set json="{""MandateListDto"": [{""Id"": ""40444019-fb52-40bd-82fa-be3d51a90ac8"",""Name"": ""TestDebtor"",""CreationDateUtc"": ""2017-07-15T08:25:59.6670000Z"",""MandateStatus"": {""Status"": ""Rejected"",""AuthenticationDate"": ""2017-07-15T00:00:00.0000000Z"",""MandateBankReferenceNumber"": """",""RejectReasons"": [""""]}}],""PageIndex"": 1,""PageSize"": 1,""ErrorList"": [],""ResponseUtcTime"": ""2017-07-16T10:28:42.8798267Z"",""UserFriendlyDisplayList"": []}"
 	set json2="{""ErrorList"":[],""MandateListDto"":[{""CreationDateUtc"":""2017-07-15T08:25:59.6670000Z"",""Id"":""40444019-fb52-40bd-82fa-be3d51a90ac8"",""MandateStatus"":{""AuthenticationDate"":""2017-07-15T00:00:00.0000000Z"",""MandateBankReferenceNumber"":"""",""RejectReasons"":[""""],""Status"":""Rejected""},""Name"":""TestDebtor""}],""PageIndex"":1,""PageSize"":1,""ResponseUtcTime"":""2017-07-16T10:28:42.8798267Z"",""UserFriendlyDisplayList"":[]}"
 	#dim main as Cogs.Lib.Json.Tests.JsonClass.Issue4.MainTestClass
-	set main=##class(Cogs.JsonObject).parseJSON(json,"Cogs.Lib.Json.Tests.JsonClass.Issue4.MainTestClass")
-	set json3=##class(Cogs.JsonObject).toJSON(main)
+	set main=##class(Cogs.Lib.Json.Tests.JsonClass.Issue4.MainTestClass).parseJSON(json)
 	set json4=main.toJSON()
 	set json5=..GetOutputJson(main)
-	do ..AssertEquals(json2,json3,"json should be the same 1")
 	do ..AssertEquals(json2,json4,"json should be the same 2")
 	do ..AssertEquals(json2,json5,"json should be the same 3")
-	do ..AssertEquals(json3,json4,"json should be the same 4")
-	do ..AssertEquals(json3,json5,"json should be the same 5")
 	quit $$$OK
 }
 
-Method GetOutputJson(obj) As %String
+ClassMethod GetOutputJson(obj) As %String
 {
     set tInitIO = $IO
     set %ISCJSONStream=##class(%Stream.TmpCharacter).%New()

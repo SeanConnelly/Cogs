@@ -1,11 +1,9 @@
-/// Copyright (c) 2017 MemCog Ltd
-/// Test fix for repeating object references
-Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest5 Extends Cogs.Touchstone.TestClass
+/// Copyright (c) 2019 MemCog Ltd
+/// Set GitHub documentation for help
+Class Cogs.Lib.Json.Tests.JsonClass.JsonClassTest5 Extends Cogs.Lib.Json.Tests.Runner
 {
 
-Parameter TestSuiteName = "Cogs.Lib.JsonClassSuite";
-
-Method Test1() As %Status(UNITTEST=1)
+ClassMethod Test1() As %Status(UNITTEST=1)
 {
 	set main=##class(Cogs.Lib.Json.Tests.JsonClass.Issue4.MainTestClass).%New()
 	set mandate=##class(Cogs.Lib.Json.Tests.JsonClass.Issue4.MandateTestClass).%New()
@@ -31,7 +29,7 @@ Method Test1() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test2() As %Status(UNITTEST=1)
+ClassMethod Test2() As %Status(UNITTEST=1)
 {
 	set json="{""MandateListDto"": [{""Id"": ""40444019-fb52-40bd-82fa-be3d51a90ac8"",""Name"": ""TestDebtor"",""CreationDateUtc"": ""2017-07-15T08:25:59.6670000Z"",""MandateStatus"": {""Status"": ""Rejected"",""AuthenticationDate"": ""2017-07-15T00:00:00.0000000Z"",""MandateBankReferenceNumber"": ""123"",""RejectReasons"": [""Invalid""]}}],""PageIndex"": 1,""PageSize"": 1,""ErrorList"": [],""ResponseUtcTime"": ""2017-07-16T10:28:42.8798267Z"",""UserFriendlyDisplayList"": []}"
 	#dim main as Cogs.Lib.Json.Tests.JsonClass.Issue4.MainTestClass
@@ -51,7 +49,7 @@ Method Test2() As %Status(UNITTEST=1)
 	quit $$$OK
 }
 
-Method Test3() As %Status(UNITTEST=1)
+ClassMethod Test3() As %Status(UNITTEST=1)
 {
 	set json="{""MandateListDto"": [{""Id"": ""40444019-fb52-40bd-82fa-be3d51a90ac8"",""Name"": ""TestDebtor"",""CreationDateUtc"": ""2017-07-15T08:25:59.6670000Z"",""MandateStatus"": {""Status"": ""Rejected"",""AuthenticationDate"": ""2017-07-15T00:00:00.0000000Z"",""MandateBankReferenceNumber"": """",""RejectReasons"": [""""]}}],""PageIndex"": 1,""PageSize"": 1,""ErrorList"": [],""ResponseUtcTime"": ""2017-07-16T10:28:42.8798267Z"",""UserFriendlyDisplayList"": []}"
 	set json2="{""ErrorList"":[],""MandateListDto"":[{""CreationDateUtc"":""2017-07-15T08:25:59.6670000Z"",""Id"":""40444019-fb52-40bd-82fa-be3d51a90ac8"",""MandateStatus"":{""AuthenticationDate"":""2017-07-15T00:00:00.0000000Z"",""MandateBankReferenceNumber"":"""",""RejectReasons"":[""""],""Status"":""Rejected""},""Name"":""TestDebtor""}],""PageIndex"":1,""PageSize"":1,""ResponseUtcTime"":""2017-07-16T10:28:42.8798267Z"",""UserFriendlyDisplayList"":[]}"
